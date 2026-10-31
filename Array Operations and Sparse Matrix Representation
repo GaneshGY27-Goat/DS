@@ -1,0 +1,246 @@
+//Insert an element at a specified position in an array
+#include <iostream>
+using namespace std;
+int main(){
+    int a[100], n, pos, value;
+    cout << "Enter array size: ";
+    cin >> n;
+    cout << "Enter elements: ";
+    for(int i = 0; i < n; i++)
+        cin >> a[i];
+    cout << "Enter position: ";
+    cin >> pos;
+    cout << "Enter value: ";
+    cin >> value;
+    if(pos < 1 || pos > n + 1 || n >= 100){
+        cout << "Invalid position";
+        return 0;
+    }
+    for(int i = n; i >= pos; i--)
+        a[i] = a[i - 1];
+    a[pos - 1] = value;
+    n++;
+    cout << "Array after insertion: ";
+    for(int i = 0; i < n; i++)
+        cout << a[i] << " ";
+    return 0;
+}
+Time Complexity: O(n)
+
+//Delete an element from a specified position in an array
+#include <iostream>
+using namespace std;
+int main(){
+    int a[100], n, pos;
+    cout << "Enter array size: ";
+    cin >> n;
+    cout << "Enter elements: ";
+    for(int i = 0; i < n; i++)
+        cin >> a[i];
+    cout << "Enter position to delete: ";
+    cin >> pos;
+    if(pos < 1 || pos > n){
+        cout << "Invalid position";
+        return 0;
+    }
+    for(int i = pos - 1; i < n - 1; i++)
+        a[i] = a[i + 1];
+    n--;
+    cout << "Array after deletion: ";
+    for(int i = 0; i < n; i++)
+        cout << a[i] << " ";
+    return 0;
+}
+Time Complexity: O(n)
+
+//Search for a specified element in an array
+#include <iostream>
+using namespace std;
+int main(){
+    int a[100], n, key, found = 0;
+    cout << "Enter array size: ";
+    cin >> n;
+    cout << "Enter elements: ";
+    for(int i = 0; i < n; i++)
+        cin >> a[i];
+    cout << "Enter element to search: ";
+    cin >> key;
+    for(int i = 0; i < n; i++){
+        if(a[i] == key){
+            cout << "Element found at position " << i + 1;
+            found = 1;
+            break;
+        }
+    }
+    if(found == 0)
+        cout << "Element not found";
+    return 0;
+}
+Time Complexity: O(n)
+
+//Merge two arrays into a single array
+#include <iostream>
+using namespace std;
+int main(){
+    int a[100], b[100], c[200];
+    int n, m, i;
+    cout << "Enter size of first array: ";
+    cin >> n;
+    cout << "Enter first array elements: ";
+    for(i = 0; i < n; i++)
+        cin >> a[i];
+    cout << "Enter size of second array: ";
+    cin >> m;
+    cout << "Enter second array elements: ";
+    for(i = 0; i < m; i++)
+        cin >> b[i];
+    for(i = 0; i < n; i++)
+        c[i] = a[i];
+    for(i = 0; i < m; i++)
+        c[n + i] = b[i];
+    cout << "Merged array: ";
+    for(i = 0; i < n + m; i++)
+        cout << c[i] << " ";
+    return 0;
+}
+Time Complexity: O(n + m)
+
+//Find the largest and smallest elements in an array
+#include <iostream>
+using namespace std;
+int main(){
+    int a[100], n, largest, smallest;
+    cout << "Enter array size: ";
+    cin >> n;
+    cout << "Enter elements: ";
+    for(int i = 0; i < n; i++)
+        cin >> a[i];
+    largest = smallest = a[0];
+    for(int i = 1; i < n; i++){
+        if(a[i] > largest)
+            largest = a[i];
+        if(a[i] < smallest)
+            smallest = a[i];
+    }
+    cout << "Largest element = " << largest;
+    cout << "\nSmallest element = " << smallest;
+    return 0;
+}
+Time Complexity: O(n)
+
+//Find the transpose of a matrix
+#include <iostream>
+using namespace std;
+int main(){
+    int a[10][10], transpose[10][10];
+    int r, c;
+    cout << "Enter rows and columns: ";
+    cin >> r >> c;
+    cout << "Enter matrix elements:\n";
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; j++)
+            cin >> a[i][j];
+    }
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; j++)
+            transpose[j][i] = a[i][j];
+    }
+    cout << "Transpose matrix:\n";
+    for(int i = 0; i < c; i++){
+        for(int j = 0; j < r; j++)
+            cout << transpose[i][j] << " ";
+        cout << endl;
+    }
+    return 0;
+}
+Time Complexity: O(r × c)
+
+//Convert a sparse matrix into triplet representation
+#include <iostream>
+using namespace std;
+int main(){
+    int a[10][10], triplet[100][3];
+    int r, c, k = 1;
+    cout << "Enter rows and columns: ";
+    cin >> r >> c;
+    cout << "Enter matrix elements:\n";
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; j++)
+            cin >> a[i][j];
+    }
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; j++){
+            if(a[i][j] != 0){
+                triplet[k][0] = i;
+                triplet[k][1] = j;
+                triplet[k][2] = a[i][j];
+                k++;
+            }
+        }
+    }
+    triplet[0][0] = r;
+    triplet[0][1] = c;
+    triplet[0][2] = k - 1;
+    cout << "\nTriplet Representation:\n";
+    cout << "Row Column Value\n";
+    for(int i = 0; i < k; i++){
+        for(int j = 0; j < 3; j++)
+            cout << triplet[i][j] << " ";
+        cout << endl;
+    }
+    return 0;
+}
+Time Complexity: O(r × c)
+
+//Add two sparse matrices
+#include <iostream>
+using namespace std;
+int main(){
+    int a[10][10], b[10][10], sum[10][10];
+    int r, c;
+    cout << "Enter rows and columns: ";
+    cin >> r >> c;
+    cout << "Enter first matrix:\n";
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; j++)
+            cin >> a[i][j];
+    }
+    cout << "Enter second matrix:\n";
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; j++)
+            cin >> b[i][j];
+    }
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; j++)
+            sum[i][j] = a[i][j] + b[i][j];
+    }
+    cout << "Addition of matrices:\n";
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; j++)
+            cout << sum[i][j] << " ";
+        cout << endl;
+    }
+    return 0;
+}
+Time Complexity: O(r × c)
+
+//Count the number of non-zero elements in a matrix
+#include <iostream>
+using namespace std;
+int main(){
+    int a[10][10], r, c, count = 0;
+    cout << "Enter rows and columns: ";
+    cin >> r >> c;
+    cout << "Enter matrix elements:\n";
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; j++){
+            cin >> a[i][j];
+            if(a[i][j] != 0)
+                count++;
+        }
+    }
+    cout << "Number of non-zero elements = " << count;
+    return 0;
+}
+Time Complexity: O(r × c)
+
