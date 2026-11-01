@@ -1,0 +1,293 @@
+//Implement a queue using an array
+#include <iostream>
+using namespace std;
+int main(){
+    int queue[100], front = -1, rear = -1;
+    int n;
+    cout << "Enter number of elements: ";
+    cin >> n;
+    for(int i = 0; i < n; i++){
+        cin >> queue[i];
+        rear++;
+    }
+    if(n > 0)
+        front = 0;
+    cout << "Queue elements: ";
+    for(int i = front; i <= rear; i++)
+        cout << queue[i] << " ";
+    return 0;
+}
+Time Complexity: O(n) for displaying all elements.
+
+//Perform ENQUEUE operation in a queue
+#include <iostream>
+using namespace std;
+int main(){
+    int queue[5], front = -1, rear = -1;
+    int value;
+    cout << "Enter value: ";
+    cin >> value;
+    if(rear == 4)
+        cout << "Queue Overflow";
+    else{
+        if(front == -1)
+            front = 0;
+        queue[++rear] = value;
+        cout << "Element inserted successfully";
+    }
+    return 0;
+}
+Time Complexity: O(1)
+
+//Perform DEQUEUE operation in a queue
+#include <iostream>
+using namespace std;
+int main(){
+    int queue[5], front = 0, rear = 2;
+    queue[0] = 10;
+    queue[1] = 20;
+    queue[2] = 30;
+    if(front == -1 || front > rear)
+        cout << "Queue Underflow";
+    else{
+        cout << "Deleted element = " << queue[front];
+        front++;
+    }
+    return 0;
+}
+Time Complexity: O(1)
+
+//Display all elements of a queue
+#include <iostream>
+using namespace std;
+int main(){
+    int queue[100], front = 0, rear, n;
+    cout << "Enter number of elements: ";
+    cin >> n;
+    rear = n - 1;
+    cout << "Enter queue elements: ";
+    for(int i = 0; i < n; i++)
+        cin >> queue[i];
+    cout << "Queue elements: ";
+    for(int i = front; i <= rear; i++)
+        cout << queue[i] << " ";
+    return 0;
+}
+Time Complexity: O(n)
+
+//Implement a circular queue
+#include <iostream>
+using namespace std;
+int main(){
+    int queue[5];
+    int front = -1, rear = -1;
+    int choice, value;
+    do{
+        cout << "\n1. Insert";
+        cout << "\n2. Delete";
+        cout << "\n3. Display";
+        cout << "\n4. Exit";
+        cout << "\nEnter choice: ";
+        cin >> choice;
+        if(choice == 1){
+            if((rear + 1) % 5 == front)
+                cout << "Circular Queue Overflow";
+            else{
+                cout << "Enter value: ";
+                cin >> value;
+                if(front == -1)
+                    front = 0;
+                rear = (rear + 1) % 5;
+                queue[rear] = value;
+            }
+        }
+        else if(choice == 2){
+            if(front == -1)
+                cout << "Queue Underflow";
+            else{
+                cout << "Deleted: " << queue[front];
+                if(front == rear)
+                    front = rear = -1;
+                else
+                    front = (front + 1) % 5;
+            }
+        }
+        else if(choice == 3){
+            if(front == -1)
+                cout << "Queue is Empty";
+            else{
+                int i = front;
+                cout << "Queue: ";
+                while(true){
+                    cout << queue[i] << " ";
+                    if(i == rear)
+                        break;
+                    i = (i + 1) % 5;
+                }
+            }
+        }
+    } while(choice != 4);
+    return 0;
+}
+Time Complexity: O(1) for insertion and deletion.
+
+//Insert elements into a circular queue
+#include <iostream>
+using namespace std;
+int main(){
+    int queue[5];
+    int front = -1, rear = -1;
+    int n, value;
+    cout << "Enter number of elements: ";
+    cin >> n;
+    for(int i = 0; i < n; i++){
+        if((rear + 1) % 5 == front){
+            cout << "Circular Queue Overflow\n";
+            break;
+        }
+        cout << "Enter value: ";
+        cin >> value;
+        if(front == -1)
+            front = 0;
+        rear = (rear + 1) % 5;
+        queue[rear] = value;
+    }
+    cout << "Circular Queue: ";
+    if(front != -1){
+        int i = front;
+        while(true){
+            cout << queue[i] << " ";
+            if(i == rear)
+                break;
+            i = (i + 1) % 5;
+        }
+    }
+    return 0;
+}
+Time Complexity: O(1) per insertion.
+
+//Delete elements from a circular queue
+#include <iostream>
+using namespace std;
+int main(){
+    int queue[5] = {10, 20, 30, 40, 50};
+    int front = 0, rear = 4;
+    if(front == -1)
+        cout << "Queue Underflow";
+    else{
+        cout << "Deleted element: " << queue[front];
+
+        if(front == rear)
+            front = rear = -1;
+        else
+            front = (front + 1) % 5;
+    }
+    cout << "\nRemaining elements: ";
+    if(front != -1){
+        int i = front;
+        while(true){
+            cout << queue[i] << " ";
+            if(i == rear)
+                break;
+            i = (i + 1) % 5;
+        }
+    }
+    return 0;
+}
+Time Complexity: O(1)
+
+//Implement a queue using a linked list
+#include <iostream>
+using namespace std;
+struct Node{
+    int data;
+    Node *next;
+};
+Node *front = NULL;
+Node *rear = NULL;
+void enqueue(int value){
+    Node *newNode = new Node;
+    newNode->data = value;
+    newNode->next = NULL;
+    if(front == NULL){
+        front = rear = newNode;
+    }
+    else{
+        rear->next = newNode;
+        rear = newNode;
+    }
+}
+void dequeue(){
+    if(front == NULL){
+        cout << "Queue Underflow\n";
+    }
+    else{
+        Node *temp = front;
+        cout << "Deleted element: " << front->data << endl;
+        front = front->next;
+        if(front == NULL)
+            rear = NULL;
+        delete temp;
+    }
+}
+void display(){
+    Node *temp = front;
+    cout << "Queue: ";
+    while(temp != NULL){
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+int main(){
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    display();
+    dequeue();
+    display();
+    return 0;
+}
+Time Complexity:
+- ENQUEUE: O(1)
+- DEQUEUE: O(1)
+- Display: O(n)
+
+//Check and handle queue overflow and underflow conditions
+#include <iostream>
+using namespace std;
+int main(){
+    int queue[5];
+    int front = -1, rear = -1;
+    int choice, value;
+    do{
+        cout << "\n1. ENQUEUE";
+        cout << "\n2. DEQUEUE";
+        cout << "\n3. EXIT";
+        cout << "\nEnter choice: ";
+        cin >> choice;
+        if(choice == 1){
+            if(rear == 4)
+                cout << "Queue Overflow";
+            else{
+                cout << "Enter value: ";
+                cin >> value;
+                if(front == -1)
+                    front = 0;
+                queue[++rear] = value;
+                cout << "Element inserted";
+            }
+        }
+        else if(choice == 2){
+            if(front == -1 || front > rear)
+                cout << "Queue Underflow";
+            else{
+                cout << "Deleted element: " << queue[front++];
+                if(front > rear)
+                    front = rear = -1;
+            }
+        }
+    } while(choice != 3);
+    return 0;
+}
+Time Complexity: O(1) for ENQUEUE and DEQUEUE.
